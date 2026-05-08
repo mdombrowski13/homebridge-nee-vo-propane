@@ -8,7 +8,7 @@ Monitor your propane level as a percentage, track estimated gallons remaining, a
 
 ## How It Works
 
-Otodata wireless tank sensors report propane levels to the Nee-Vo cloud. Nee-Vo provides a public share page for each tank at `https://nv.otodata.com/d/<shareId>`. This plugin uses a JSON endpoint inferred from that share page to retrieve tank telemetry on a configurable schedule, and exposes your tank as a HomeKit accessory using the Battery service — the closest native HomeKit abstraction for a "level with a low alert."
+Otodata wireless tank sensors report propane levels to the Nee-Vo cloud. Nee-Vo provides a public share page for each tank at `https://nv.otodata.com/d/<shareId>`. This plugin uses a JSON endpoint inferred from that share page to retrieve tank telemetry on a configurable schedule, and exposes your tank to HomeKit using a Humidity Sensor service for the propane percentage tile, a Battery service for the low-level alert, and a custom Propane service for gallons remaining and tank capacity metadata.
 
 > **Important:** Nee-Vo has not published or documented this API. The endpoint used by this plugin was discovered by inspecting the network requests made by the share page. It could change or disappear without any notice. See [Known Limitations](#known-limitations).
 
@@ -19,7 +19,7 @@ The sensor hardware updates at most once per hour, so the plugin defaults to pol
 ## Requirements
 
 - [Homebridge](https://homebridge.io) v1.8.5 or later
-- Node.js v18 or later (v22 recommended)
+- Node.js v20, v22, or v24
 - An Otodata / Nee-Vo propane tank sensor
 - Your tank's share link ID from the Nee-Vo app or web portal
 
@@ -136,15 +136,15 @@ Add a platform entry to the `platforms` array in your Homebridge `config.json`:
 
 ## HomeKit Behavior
 
-The tank appears in the Home app as a **battery accessory** — the closest native HomeKit abstraction for a percentage level with a low alert.
+The tank appears in the Home app primarily as a **Humidity Sensor** so the room tile can display the propane percentage. It also exposes a **Battery** service that maps propane percentage to HomeKit's low-battery alert behavior.
 
 | Element | Behavior |
 |---|---|
-| Room tile | Shows propane level as a percentage (e.g. "69%") |
-| Low battery alert | Triggers when level drops below `lowThreshold` |
+| Room tile | Humidity Sensor shows propane level as a percentage (e.g. "69%") |
+| Low battery alert | Battery service triggers when propane level drops below `lowThreshold` |
 | Automations | Appears under "A sensor detects something" — trigger when level drops below threshold |
 | Siri | "Hey Siri, what is my propane level?" |
-| Gallons remaining | Visible in advanced HomeKit apps (e.g. Eve, Home+) |
+| Gallons remaining | Exposed through a custom Propane service; visible in advanced HomeKit apps (e.g. Eve, Home+) |
 
 > **Tip:** In the Home app go to **Automation → + → Add Automation → A sensor detects something**, select Propane Tank, and trigger when the level drops below your threshold. Use "Notify when run" on the automation or a Shortcuts action to send a custom notification.
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1
+
+- Correct package and README wording to describe the Humidity Sensor, Battery, and custom Propane services accurately.
+- Update documented Node.js support to the current Homebridge-supported LTS versions.
+
 ## 1.0.0
 
 - Initial public release of `homebridge-nee-vo-propane`.
