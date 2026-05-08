@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Fix `config.schema.json` required field declarations for JSON Schema compliance.
+
 ## 1.0.1
 
 - Correct package and README wording to describe the Humidity Sensor, Battery, and custom Propane services accurately.

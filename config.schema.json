@@ -4,23 +4,21 @@
   "singular": true,
   "schema": {
     "type": "object",
+    "required": ["name", "shareId", "tankCapacityGallons"],
     "properties": {
       "name": {
         "title": "Name",
         "type": "string",
-        "default": "Propane Tank",
-        "required": true
+        "default": "Propane Tank"
       },
       "shareId": {
         "title": "Share ID",
         "type": "string",
-        "required": true,
         "description": "The short alphanumeric token from your Nee-Vo share URL (e.g. 'FJZvjg' from https://nv.otodata.com/d/FJZvjg)"
       },
       "tankCapacityGallons": {
         "title": "Tank Capacity (gallons)",
         "type": "number",
-        "required": true,
         "description": "Total capacity of your propane tank in gallons. Used to calculate gallons remaining."
       },
       "pollIntervalMinutes": {

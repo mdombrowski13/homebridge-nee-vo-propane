@@ -58,7 +58,7 @@ export class PropaneTankAccessory {
     this.infoService
       .setCharacteristic(HapCharacteristic.Manufacturer, 'Otodata / Nee-Vo')
       .setCharacteristic(HapCharacteristic.Model, 'Propane Tank Sensor')
-      .setCharacteristic(HapCharacteristic.FirmwareRevision, '1.0.1')
+      .setCharacteristic(HapCharacteristic.FirmwareRevision, '1.0.2')
       .setCharacteristic(HapCharacteristic.SerialNumber, 'Pending first poll...');
 
     // Humidity Sensor (primary — Apple Home renders this as "XX%" in the room tile
