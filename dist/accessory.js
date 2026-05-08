@@ -7,6 +7,7 @@ const POLL_MIN_MINUTES = 60;
 const DEFAULT_POLL_MINUTES = 1440;
 const DEFAULT_LOW_THRESHOLD = 30;
 const DEFAULT_API_BASE_URL = 'https://nv.otodata.com/api/devices';
+const INITIAL_POLL_DELAY_MS = 30 * 1000;
 const UUID_PROPANE_SERVICE = 'E863F010-079E-48FF-8F27-9C2605A29F52';
 const UUID_GALLONS_REMAINING = 'E863F011-079E-48FF-8F27-9C2605A29F52';
 const UUID_TANK_CAPACITY = 'E863F012-079E-48FF-8F27-9C2605A29F52';
@@ -38,7 +39,7 @@ class PropaneTankAccessory {
         this.infoService
             .setCharacteristic(HapCharacteristic.Manufacturer, 'Otodata / Nee-Vo')
             .setCharacteristic(HapCharacteristic.Model, 'Propane Tank Sensor')
-            .setCharacteristic(HapCharacteristic.FirmwareRevision, '1.0.2')
+            .setCharacteristic(HapCharacteristic.FirmwareRevision, '1.0.3')
             .setCharacteristic(HapCharacteristic.SerialNumber, 'Pending first poll...');
         // Humidity Sensor (primary — Apple Home renders this as "XX%" in the room tile
         // and exposes it as a trigger in automations; propane % maps directly to humidity %)
@@ -84,9 +85,15 @@ class PropaneTankAccessory {
                 }));
         // Tank capacity is static — set it once
         this.tankCapacityChar.updateValue(config.tankCapacityGallons);
-        // Initial poll immediately, then on interval
-        this.poll();
-        setInterval(() => this.poll(), this.pollIntervalMs);
+        // Let Homebridge complete startup before making cloud requests. This keeps
+        // short-lived verification runs and service restarts from being held open.
+        this.releaseTimer(setTimeout(() => this.poll(), INITIAL_POLL_DELAY_MS));
+        this.releaseTimer(setInterval(() => this.poll(), this.pollIntervalMs));
+    }
+    releaseTimer(timer) {
+        if (typeof timer === 'object' && 'unref' in timer) {
+            timer.unref();
+        }
     }
     getLowBatteryStatus() {
         const { Characteristic } = this.platform.api.hap;

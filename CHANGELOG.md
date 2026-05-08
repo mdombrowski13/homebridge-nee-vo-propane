@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+- Delay the first cloud poll until after Homebridge startup and unref polling timers so verification/startup teardown can complete cleanly.
+
 ## 1.0.2
 
 - Fix `config.schema.json` required field declarations for JSON Schema compliance.

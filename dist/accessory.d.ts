@@ -15,6 +15,7 @@ export declare class PropaneTankAccessory {
     private readonly lowThreshold;
     private readonly resolvedConfig;
     constructor(platform: PropaneTankPlatform, accessory: PlatformAccessory, config: PluginConfig);
+    private releaseTimer;
     private getLowBatteryStatus;
     private poll;
     private updateCharacteristics;

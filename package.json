@@ -1,6 +1,6 @@
 {
   "name": "homebridge-nee-vo-propane",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Homebridge plugin for Otodata / Nee-Vo propane tank sensors via HomeKit Humidity Sensor and Battery services",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
