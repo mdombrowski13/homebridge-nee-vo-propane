@@ -1,0 +1,63 @@
+{
+  "pluginAlias": "PropaneTank",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "default": "Propane Tank",
+        "required": true
+      },
+      "shareId": {
+        "title": "Share ID",
+        "type": "string",
+        "required": true,
+        "description": "The short alphanumeric token from your Nee-Vo share URL (e.g. 'FJZvjg' from https://nv.otodata.com/d/FJZvjg)"
+      },
+      "tankCapacityGallons": {
+        "title": "Tank Capacity (gallons)",
+        "type": "number",
+        "required": true,
+        "description": "Total capacity of your propane tank in gallons. Used to calculate gallons remaining."
+      },
+      "pollIntervalMinutes": {
+        "title": "Poll Interval (minutes)",
+        "type": "number",
+        "default": 1440,
+        "minimum": 60,
+        "description": "How often to check the propane level in minutes. Minimum 60 (the sensor updates at most once per hour). Default is 1440 (24 hours)."
+      },
+      "lowThreshold": {
+        "title": "Low Level Threshold (%)",
+        "type": "number",
+        "default": 30,
+        "minimum": 0,
+        "maximum": 100,
+        "description": "Percentage below which the low propane alert triggers in HomeKit automations. Default is 30."
+      },
+      "apiBaseUrl": {
+        "title": "API Base URL",
+        "type": "string",
+        "default": "https://nv.otodata.com/api/devices",
+        "description": "Base URL for the Nee-Vo API. Only change this if the endpoint moves. Default: https://nv.otodata.com/api/devices"
+      }
+    }
+  },
+  "form": [
+    "name",
+    "shareId",
+    "tankCapacityGallons",
+    "pollIntervalMinutes",
+    "lowThreshold",
+    {
+      "type": "fieldset",
+      "title": "Advanced",
+      "expandable": true,
+      "expanded": false,
+      "items": ["apiBaseUrl"]
+    }
+  ]
+}
