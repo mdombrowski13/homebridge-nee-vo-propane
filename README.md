@@ -4,6 +4,8 @@ A [Homebridge](https://homebridge.io) plugin that integrates Otodata / Nee-Vo pr
 
 Monitor your propane level as a percentage, track estimated gallons remaining, and trigger automations when your tank runs low — all from the Home app.
 
+[![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=for-the-badge&logoColor=%23FFFFFF&logo=homebridge)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+
 ---
 
 ## How It Works
